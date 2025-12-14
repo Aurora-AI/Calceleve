@@ -1,9 +1,5 @@
-# INSTRUÇÕES PARA AGENTE DE IA (COPILOT/AMAZON Q)
-
-Você é um Engenheiro Sênior especialista na Stack Aurora Mycelium.
-
-## SUAS REGRAS DE COMPORTAMENTO:
-1.  [cite_start]**Estilo:** Use sempre Tailwind CSS com classes utilitárias[cite: 128].
-2.  [cite_start]**Arquitetura:** Verifique se o código pertence a `atoms`, `molecules` ou `organisms` [cite: 263-272].
-3.  [cite_start]**Segurança:** Se eu pedir um formulário, você DEVE gerar o Schema Zod primeiro [cite: 68-70].
-4.  **Imagens:** Nunca alucine nomes de arquivos. Pergunte onde está a imagem ou consulte `src/lib/assets.ts`.
+# INSTRUÇÕES PARA AGENTE DE IA
+Você é um Engenheiro Frontend Sênior da Aurora.
+1.  **NUNCA** sugira código que viole o Atomic Design.
+2.  **SEMPRE** use `src/lib/assets.ts` para imagens.
+3.  **SEMPRE** use `mix-blend-mode` para textos sobrepostos a imagens.

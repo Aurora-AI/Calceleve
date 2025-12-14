@@ -5,38 +5,44 @@ import { motion } from 'framer-motion';
 
 export function HeroSection() {
   return (
-    <section className="relative w-full h-screen bg-[#FAFAFA] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[100svh] bg-[#FDFDFD] flex flex-col items-center justify-center overflow-hidden">
       
-      {/* Camada de Tipografia (Visualmente Atrás) */}
-      <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+      {/* CAMADA 1: PUZZLE (FUNDO/MEIO) */}
+      {/* Z-Index 10: Fica atrás do texto, mas à frente do background branco */}
+      <div className="relative z-10 w-full flex items-center justify-center">
+         <PuzzleDisplay />
+      </div>
+
+      {/* CAMADA 2: TIPOGRAFIA (FRENTE - GLASS EFFECT) */}
+      {/* Z-Index 20: Fica NA FRENTE da cabeça */}
+      <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none select-none">
         <motion.h1 
-          initial={{ opacity: 0, letterSpacing: "0.1em" }}
-          animate={{ opacity: 1, letterSpacing: "-0.05em" }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="text-[18vw] md:text-[22vw] leading-none font-black text-slate-900/10 whitespace-nowrap select-none"
+          // AQUI ESTÁ A MÁGICA DO "BLUR ESCURO/TRANSPARENTE":
+          // text-slate-900/80: Cor escura semi-transparente.
+          // mix-blend-overlay: Faz o texto se fundir com a imagem atrás, criando contraste.
+          // blur-[1px]: Um leve desfoque nas bordas para integrar.
+          className="text-[18vw] xl:text-[22vw] font-black text-slate-900/80 leading-none whitespace-nowrap mix-blend-overlay blur-[0.5px]"
         >
           CALCE LEVE
         </motion.h1>
       </div>
 
-      {/* Camada do Puzzle (Visualmente à Frente) */}
-      <div className="relative z-20 w-full max-w-[1400px] mx-auto px-4 mt-10 md:mt-0">
-        <PuzzleDisplay />
-      </div>
-
-      {/* Indicador de Scroll (Minimalista) */}
+      {/* CAMADA 3: SCROLL INDICATOR (UI) */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-30 mix-blend-multiply"
+        transition={{ delay: 1.5, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-30"
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] font-semibold text-slate-400">Scroll</span>
-        <div className="w-[1px] h-10 bg-slate-200">
+        <span className="text-[9px] uppercase tracking-[0.3em] text-slate-400 font-semibold">Scroll para Explorar</span>
+        <div className="w-[1px] h-10 bg-slate-200 overflow-hidden">
           <motion.div 
-            animate={{ height: ["0%", "100%"] }}
-            transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-            className="w-full bg-slate-800"
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+            className="w-full h-1/2 bg-slate-400"
           />
         </div>
       </motion.div>

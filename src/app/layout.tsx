@@ -1,23 +1,39 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+"use client";
 import "./globals.css";
-import { cn } from "@/lib/utils";
+import { useEffect } from "react";
+import Lenis from "lenis";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Configuração "Heavy" para sensação Premium
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
 
-export const metadata: Metadata = {
-  title: "Calce Leve | Dashboard",
-  description: "Interface de Performance Soberana",
-};
+    lenis.on("scroll", ScrollTrigger.update);
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(lenis.raf);
+    };
+  }, []);
+
   return (
-    <html lang="pt-BR" className="scroll-smooth">
-      <body className={cn(inter.variable, "font-sans antialiased bg-[#FDFDFD]")}>
+    <html lang="pt-BR">
+      <body className="antialiased">
         {children}
       </body>
     </html>
